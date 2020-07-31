@@ -36,7 +36,10 @@ $(".btn").click(function() {
   //Plays sound when user clicks on the button
   playSound(userChosenColour);
 
-  console.log(userClickedPattern);
+  //Passes the pressed button to the animatePress()
+  animatePress(userChosenColour);
+
+  console.log("Button clicked: " + userClickedPattern);
 
 });
 
@@ -54,10 +57,10 @@ function nextSequence() {
   //jQuery select the button with the same ID as the randomChosenColour and animate it with a flash
   $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
 
-  //return randomChosenColour;
-
   //Refactoring the code in playSound() so it work for both playing sound in nextSequence() and when the user clicks a button
   playSound(randomChosenColour);
+
+  //return randomChosenColour;
 
 }
 
@@ -66,4 +69,15 @@ function playSound(name) {
   //JS to play the sound for each button colour selected
   var audio = new Audio("sounds/" + name + ".mp3");
   audio.play();
+}
+
+//Function to animate the buttons with a CSS class, it takes one parameter called currentColour
+function animatePress(currentColour) {
+  //Use jQuery to add this pressed class to the button that gets clicked inside animatePress()
+  $("#" + currentColour).addClass("pressed");
+
+  //JS to remove the pressed class after 100 milliseconds
+  setTimeout(function() {
+    $("#" + currentColour).removeClass("pressed");
+  }, 100);
 }
