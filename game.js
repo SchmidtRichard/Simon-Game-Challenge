@@ -33,12 +33,16 @@ $(".btn").click(function() {
   //Add the contents of the variable userChosenColour to the end of userClickedPattern array
   userClickedPattern.push(userChosenColour);
 
+  //Plays sound when user clicks on the button
+  playSound(userChosenColour);
+
   console.log(userClickedPattern);
 
 });
 
 //Function to generate a random number between 0 and 3
 function nextSequence() {
+  //Generates a random number between 1 and 3
   var randomNumber = buttonColours[Math.floor(Math.random() * 4)];
 
   //New variable randomChosenColour to store the random colour
@@ -50,10 +54,16 @@ function nextSequence() {
   //jQuery select the button with the same ID as the randomChosenColour and animate it with a flash
   $("#" + randomChosenColour).fadeIn(100).fadeOut(100).fadeIn(100);
 
-  //JS to play the sound for each button colour selected
-  var audio = new Audio("sounds/" + randomChosenColour + ".mp3");
-  audio.play();
-
   //return randomChosenColour;
 
+  //Refactoring the code in playSound() so it work for both playing sound in nextSequence() and when the user clicks a button
+  playSound(randomChosenColour);
+
+}
+
+//Function to play sound that takes one parameter called name
+function playSound(name) {
+  //JS to play the sound for each button colour selected
+  var audio = new Audio("sounds/" + name + ".mp3");
+  audio.play();
 }
