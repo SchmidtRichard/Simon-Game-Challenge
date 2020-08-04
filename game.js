@@ -127,6 +127,18 @@ function checkAnswer(currentLevel) {
       }, 1000);
     }
   } else {
+    //JS to play the sound for if the user choses the wrong colour
+    var audio = new Audio("sounds/wrong.mp3");
+    audio.play();
+
+    //Use jQuery to add the css game-over class once the user gets one of the answers wrong and then remove it after 200 milliseconds
+    $('body').addClass('game-over');
+
+    //Change the h1 title
+    $("#level-title").text("Game Over, Press Any Key to Restart");
+    setTimeout(function() {
+      $('body').removeClass('game-over');
+    }, 200);
     console.log("Wrong");
   }
 }
