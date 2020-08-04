@@ -74,7 +74,6 @@ function nextSequence() {
   playSound(randomChosenColour);
 
   //return randomChosenColour;
-
 }
 
 //Function to play sound that takes one parameter called name
@@ -140,5 +139,15 @@ function checkAnswer(currentLevel) {
       $('body').removeClass('game-over');
     }, 200);
     console.log("Wrong");
+
+    //Call start over if the user gets the sequence wrong
+    startOver();
   }
+}
+
+//Function to restart the game
+function startOver() {
+  level = 0;
+  gamePattern = [];
+  started = false;
 }
