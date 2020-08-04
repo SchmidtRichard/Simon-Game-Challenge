@@ -41,10 +41,23 @@ $(".btn").click(function() {
 
   console.log("Button clicked: " + userClickedPattern);
 
+  //Call checkAnswer() after the user has clicked and chosen their answer, passing in the index of the last answer in the user's sequence
+  checkAnswer(userClickedPattern.length - 1);
+
 });
 
 //Function to generate a random number between 0 and 3
 function nextSequence() {
+
+  //Once nextSequence() is triggered, reset the userClickedPattern to an empty array ready for the next level
+  userClickedPattern = [];
+
+  //Increase the level by 1 every time nextSequence() is called
+  level++;
+
+  //Update the h1 with the value of the level been played
+  $("#level-title").text("Level " + level);
+
   //Generates a random number between 1 and 3
   var randomNumber = buttonColours[Math.floor(Math.random() * 4)];
 
@@ -80,4 +93,40 @@ function animatePress(currentColour) {
   setTimeout(function() {
     $("#" + currentColour).removeClass("pressed");
   }, 100);
+}
+
+//Variable to keep track of whether the game has started or not in order to only call nextSequence() on the first keypress
+var started = false;
+
+//Variable to hold the level been played
+var level = 0;
+
+//Detect when a keyboard key has been pressed with jQuery, once it happens call nextSequence()
+$(document).keypress(function() {
+  if (!started) {
+    //Change the text on h1 to "Level 0..."
+    $("#level-title").text("Level " + level);
+    nextSequence();
+    started = true;
+  }
+});
+
+//Function to check the answer from the user
+function checkAnswer(currentLevel) {
+  //Check if the most recent user answer is the same as the game pattern
+  //If so then log "success", otherwise log "wrong"
+  if (gamePattern[currentLevel] === userClickedPattern[currentLevel]) {
+    console.log("Success");
+
+    //if the user got the most recent answer right on the check above, then check that they have finished their sequence with another if statement
+    if (userClickedPattern.length === gamePattern.length) {
+
+      //Call nextSequence() after a 1000 millisecond delay
+      setTimeout(function() {
+        nextSequence();
+      }, 1000);
+    }
+  } else {
+    console.log("Wrong");
+  }
 }
